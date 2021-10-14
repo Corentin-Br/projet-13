@@ -28,7 +28,9 @@ jobs:
            python manage.py test
       - run: 
           name: Linting
-          command: flake8
+          command: |
+            . venv/bin/activate
+            flake8
   containerization:
     docker:
       - image: circleci/python:3.8
