@@ -55,8 +55,8 @@ jobs:
           name: create-image
           command: | 
             docker build -t oc-lettings .
-            docker tag oc-lettings oc-lettings:$CIRCLE_SHA1 
-            docker image push oc-lettings:$CIRCLE_SHA1
+            docker tag oc-lettings corbravo/oc-lettings:$CIRCLE_SHA1 
+            docker image push corbravo/oc-lettings:$CIRCLE_SHA1
     
       
 
