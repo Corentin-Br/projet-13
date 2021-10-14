@@ -17,7 +17,9 @@ jobs:
       - save_cache:
           key: v2-dependencies-{{ checksum "requirements.txt" }}
           paths:
-            - ".venv"
+            - "~/.cache/pip"
+            - "/usr/local/lib/python3.8/site-packages"
+            - "/usr/local/lib/site-python"
       - run:
           name: Run tests
           command: | 
