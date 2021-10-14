@@ -47,6 +47,7 @@ jobs:
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
             docker build -t oc-lettings .
             docker tag oc-lettings corbravo/oc-lettings:$CIRCLE_SHA1 
+            docker tag oc-lettings corbravo/oc-lettings:latest
             docker image push corbravo/oc-lettings:$CIRCLE_SHA1
   deploy:
     docker:
