@@ -29,6 +29,3 @@ class LettingsTest(TestCase):
     def test_title_of_a_letting_page_is_correct(self):
         response = self.client.get(reverse('letting', kwargs={"letting_id": self.letting.pk}))
         self.assertContains(response, f'<title>{self.letting.title}</title>')
-
-
-
