@@ -54,7 +54,7 @@ jobs:
       - run:
           name: create-image
           command: | 
-            docker login
+            docker login --username corbravo --password $DOCKERHUB_PASSWORD
             docker build -t oc-lettings .
             docker tag oc-lettings corbravo/oc-lettings:$CIRCLE_SHA1 
             docker image push corbravo/oc-lettings:$CIRCLE_SHA1
