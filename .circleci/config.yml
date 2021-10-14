@@ -40,8 +40,7 @@ jobs:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
           command: | 
-            pip install pipenv
-            pipenv run python manage.py test
+           python manage.py test
   containerization:
     docker:
       - image: circleci/python:3.8
@@ -50,12 +49,28 @@ jobs:
          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: create-image
           command: | 
+            docker login --username corbravo --password $DOCKERHUB_PASSWORD
             docker build -t oc-lettings .
-            docker tag oc-lettings:$CIRCLE_SHA1 oc-lettings
-            docker push oc-lettings:$CIRCLE_SHA1
+            docker tag oc-lettings corbravo/oc-lettings:$CIRCLE_SHA1 
+            docker image push corbravo/oc-lettings:$CIRCLE_SHA1
+  deploy:
+    docker:
+      - image: circleci/python:3.8
+        auth:
+            username: corbravo
+            password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - run:
+        # To be done
+          name: do-nothing
+          command:
+            docker login --username corbravo --password $DOCKERHUB_PASSWORD
     
       
 
@@ -66,4 +81,15 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build-and-test
-      - containerization
+      - containerization:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - containerization
+          filters:
+            branches:
+              only: master
