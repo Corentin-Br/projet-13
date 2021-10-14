@@ -18,8 +18,6 @@ jobs:
           key: dependencies-{{ checksum "requirements.txt" }}
           paths:
             - ".venv"
-            - "/usr/local/bin"
-            - "/usr/local/lib/python3.8/site-packages"
       - run:
           name: Run tests
           command: | 
