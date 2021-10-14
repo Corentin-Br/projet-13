@@ -56,7 +56,7 @@ jobs:
           command: | 
             docker build -t oc-lettings .
             docker tag oc-lettings oc-lettings:$CIRCLE_SHA1 
-            docker push oc-lettings:$CIRCLE_SHA1
+            docker image push oc-lettings:$CIRCLE_SHA1
     
       
 
