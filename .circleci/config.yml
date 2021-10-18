@@ -10,7 +10,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - restore_cache:  # ensure this step occurs *before* installing dependencies
+      - restore_cache:
           key: v3-dependencies-{{ checksum "all_requirements.txt" }}
       - run: 
           command: |
@@ -26,6 +26,10 @@ jobs:
           command: | 
            . venv/bin/activate
            python manage.py test
+          environment:
+            - django_key: $django_key
+            - debug: $debug
+            - allowed_hosts: $allowed_hosts
       - run: 
           name: Linting
           command: |
@@ -50,6 +54,10 @@ jobs:
             docker tag oc-lettings corbravo/oc-lettings:latest
             docker image push corbravo/oc-lettings:$CIRCLE_SHA1
             docker image push corbravo/oc-lettings:latest
+          environment:
+            - django_key: $django_key
+            - debug: $debug
+            - allowed_hosts: $allowed_hosts
   deploy:
     docker:
       - image: circleci/python:3.8
