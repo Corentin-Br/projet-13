@@ -4,15 +4,12 @@ orbs:
 jobs:
   build-and-test:
     parameters:
-      DJANGO_KEY:
+      django_key:
         type: env_var_name
-        default: django_key
-      DEBUG:
+      debug:
         type: env_var_name
-        default: debug
-      ALLOWED_HOSTS:
+      allowed_hosts:
         type: env_var_name
-        default: allowed_hosts
     docker:
       - image: circleci/python:3.8
         auth: 
@@ -47,15 +44,12 @@ jobs:
             flake8
   containerization:
     parameters:
-      DJANGO_KEY:
+      django_key:
         type: env_var_name
-        default: django_key
-      DEBUG:
+      debug:
         type: env_var_name
-        default: debug
-      ALLOWED_HOSTS:
+      allowed_hosts:
         type: env_var_name
-        default: allowed_hosts
     docker:
       - image: circleci/python:3.8
         auth:
@@ -68,9 +62,9 @@ jobs:
       - run:
           name: create-image
           command: |
-            echo 'django_key=<< parameters.DJANGO_KEY>>' >> '.env'
-            echo 'debug=<< parameters.DEBUG>>' >> '.env'
-            echo 'allowed_hosts=<< parameters.ALLOWED_HOSTS>> >> '.env'
+            echo 'django_key=<< parameters.DJANGO_KEY >>' >> '.env'
+            echo 'debug=<< parameters.DEBUG >>' >> '.env'
+            echo 'allowed_hosts=<< parameters.ALLOWED_HOSTS >> >> '.env'
             cat .env
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
             docker build -t oc-lettings .
