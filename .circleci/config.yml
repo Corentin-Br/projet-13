@@ -42,17 +42,17 @@ jobs:
         auth:
          username: corbravo
          password: $DOCKERHUB_PASSWORD
-    environment:
-      django_key: $django_key
-      debug: $debug
-      allowed_hosts: $allowed_hosts
     steps:
       - checkout
       - setup_remote_docker:
           version: 19.03.13
       - run:
           name: create-image
-          command: | 
+
+          command: |
+            echo 'export django_key=$django_key' >> $BASH_ENV
+            echo 'export debug=$debug' >> $BASH_ENV
+            echo 'export allowed_hosts=$allowed_hosts' >> $BASH_ENV
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
             docker build -t oc-lettings .
             docker tag oc-lettings corbravo/oc-lettings:$CIRCLE_SHA1 
