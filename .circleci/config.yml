@@ -53,7 +53,7 @@ jobs:
             echo 'debug=$debug' >> '.env'
             echo 'allowed_hosts=$allowed_hosts' >> '.env'
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
-            docker-compose build -t oc-lettings .
+            docker build -t oc-lettings .
             docker tag oc-lettings corbravo/oc-lettings:$CIRCLE_SHA1 
             docker tag oc-lettings corbravo/oc-lettings:latest
             docker image push corbravo/oc-lettings:$CIRCLE_SHA1
