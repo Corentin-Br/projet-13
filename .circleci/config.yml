@@ -54,10 +54,10 @@ jobs:
             echo 'allowed_hosts=$allowed_hosts' >> '.env'
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
             docker-compose build
-            docker tag Python-OC-Lettings-FR corbravo/Python-OC-Lettings-FR:$CIRCLE_SHA1
-            docker tag Python-OC-Lettings-FR corbravo/Python-OC-Lettings-FR:latest
-            docker image push corbravo/Python-OC-Lettings-FR:$CIRCLE_SHA1
-            docker image push corbravo/Python-OC-Lettings-FR:latest
+            docker tag project_web:latest corbravo/oc-lettings:$CIRCLE_SHA1
+            docker tag project_web corbravo/oc-lettings:latest
+            docker image push corbravo/oc-lettings:$CIRCLE_SHA1
+            docker image push corbravo/oc-lettings:latest
 
   deploy:
     docker:
