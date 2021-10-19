@@ -6,13 +6,13 @@ jobs:
     parameters:
       DJANGO_KEY:
         type: env_var_name
-        default: django_key
+        default: $django_key
       DEBUG:
         type: env_var_name
-        default: debug
+        default: $debug
       ALLOWED_HOSTS:
         type: env_var_name
-        default: allowed_hosts
+        default: $allowed_hosts
     docker:
       - image: circleci/python:3.8
         auth: 
@@ -49,13 +49,13 @@ jobs:
     parameters:
       DJANGO_KEY:
         type: env_var_name
-        default: django_key
+        default: $django_key
       DEBUG:
         type: env_var_name
-        default: debug
+        default: $debug
       ALLOWED_HOSTS:
         type: env_var_name
-        default: allowed_hosts
+        default: $allowed_hosts
     docker:
       - image: circleci/python:3.8
         auth:
