@@ -1,6 +1,7 @@
 import os
 from dotenv import dotenv_values
 
+
 config = dotenv_values(".env")
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -70,7 +71,7 @@ WSGI_APPLICATION = 'oc_lettings_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'oc-lettings-site.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'oc-lettings-site.sqlite3'),
     }
 }
 
