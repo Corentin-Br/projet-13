@@ -3,15 +3,6 @@ orbs:
   python: circleci/python@1.2
 jobs:
   build-and-test:
-    parameters:
-      django_key:
-        type: env_var_name
-      DEBUG:
-        type: env_var_name
-        default: debug
-      ALLOWED_HOSTS:
-        type: env_var_name
-        default: allowed_hosts
     docker:
       - image: circleci/python:3.8
         auth: 
@@ -23,9 +14,9 @@ jobs:
           key: v3-dependencies-{{ checksum "requirements.txt" }}
       - run: 
           command: |
-            echo 'django_key=<< parameters.DJANGO_KEY>>' >> '.env'
-            echo 'debug=<< parameters.DEBUG>>' >> '.env'
-            echo 'allowed_hosts=<< parameters.ALLOWED_HOSTS>>' >> '.env'
+            echo 'django_key=${django_key}' >> '.env'
+            echo 'debug=${debug}' >> '.env'
+            echo 'allowed_hosts=${allowed_hosts}' >> '.env'
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
@@ -45,16 +36,6 @@ jobs:
             . venv/bin/activate
             flake8
   containerization:
-    parameters:
-      DJANGO_KEY:
-        type: env_var_name
-        default: $django_key
-      DEBUG:
-        type: env_var_name
-        default: $debug
-      ALLOWED_HOSTS:
-        type: env_var_name
-        default: $allowed_hosts
     docker:
       - image: circleci/python:3.8
         auth:
@@ -67,9 +48,9 @@ jobs:
       - run:
           name: create-image
           command: |
-            echo 'django_key=<< parameters.DJANGO_KEY >>' >> '.env'
-            echo 'debug=<< parameters.DEBUG >>' >> '.env'
-            echo 'allowed_hosts=<< parameters.ALLOWED_HOSTS >>' >> '.env'
+            echo 'django_key=${django_key}' >> '.env'
+            echo 'debug=${debug}' >> '.env'
+            echo 'allowed_hosts=${allowed_hosts}' >> '.env'
             cat .env
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
             docker build -t oc-lettings .
