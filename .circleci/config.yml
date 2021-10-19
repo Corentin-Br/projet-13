@@ -47,15 +47,14 @@ jobs:
           version: 19.03.13
       - run:
           name: create-image
-
           command: |
             echo 'django_key=$django_key' >> '.env'
             echo 'debug=$debug' >> '.env'
             echo 'allowed_hosts=$allowed_hosts' >> '.env'
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
-            docker-compose build
-            docker tag project_web:latest corbravo/oc-lettings:$CIRCLE_SHA1
-            docker tag project_web corbravo/oc-lettings:latest
+            docker build -t oc-lettings .
+            docker tag oc-lettings corbravo/oc-lettings:$CIRCLE_SHA1
+            docker tag oc-lettings corbravo/oc-lettings:latest
             docker image push corbravo/oc-lettings:$CIRCLE_SHA1
             docker image push corbravo/oc-lettings:latest
 
