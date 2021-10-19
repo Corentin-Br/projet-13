@@ -4,15 +4,14 @@ orbs:
 jobs:
   build-and-test:
     parameters:
-      DJANGO_KEY:
-        type: string
-        default: $django_key
+      django_key:
+        type: env_var_name
       DEBUG:
-        type: string
-        default: $debug
+        type: env_var_name
+        default: debug
       ALLOWED_HOSTS:
-        type: string
-        default: $allowed_hosts
+        type: env_var_name
+        default: allowed_hosts
     docker:
       - image: circleci/python:3.8
         auth: 
@@ -48,13 +47,13 @@ jobs:
   containerization:
     parameters:
       DJANGO_KEY:
-        type: string
+        type: env_var_name
         default: $django_key
       DEBUG:
-        type: string
+        type: env_var_name
         default: $debug
       ALLOWED_HOSTS:
-        type: string
+        type: env_var_name
         default: $allowed_hosts
     docker:
       - image: circleci/python:3.8
