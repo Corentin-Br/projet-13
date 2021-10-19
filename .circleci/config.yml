@@ -8,6 +8,10 @@ jobs:
         auth: 
           username: corbravo
           password: $DOCKERHUB_PASSWORD
+    environment:
+      django_key: $django_key
+      debug: $debug
+      allowed_hosts: $allowed_hosts
     steps:
       - checkout
       - restore_cache:
@@ -26,10 +30,7 @@ jobs:
           command: | 
            . venv/bin/activate
            python manage.py test
-          environment:
-            - django_key: $django_key
-            - debug: $debug
-            - allowed_hosts: $allowed_hosts
+
       - run: 
           name: Linting
           command: |
@@ -41,6 +42,10 @@ jobs:
         auth:
          username: corbravo
          password: $DOCKERHUB_PASSWORD
+    environment:
+      django_key: $django_key
+      debug: $debug
+      allowed_hosts: $allowed_hosts
     steps:
       - checkout
       - setup_remote_docker:
@@ -54,10 +59,7 @@ jobs:
             docker tag oc-lettings corbravo/oc-lettings:latest
             docker image push corbravo/oc-lettings:$CIRCLE_SHA1
             docker image push corbravo/oc-lettings:latest
-          environment:
-            - django_key: $django_key
-            - debug: $debug
-            - allowed_hosts: $allowed_hosts
+
   deploy:
     docker:
       - image: circleci/python:3.8
