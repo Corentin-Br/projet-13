@@ -26,7 +26,7 @@ jobs:
           command: |
             echo 'django_key=<< parameters.DJANGO_KEY>>' >> '.env'
             echo 'debug=<< parameters.DEBUG>>' >> '.env'
-            echo 'allowed_hosts=<< parameters.ALLOWED_HOSTS>> >> '.env'
+            echo 'allowed_hosts=<< parameters.ALLOWED_HOSTS>>' >> '.env'
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
