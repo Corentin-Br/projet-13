@@ -50,9 +50,9 @@ jobs:
           name: create-image
 
           command: |
-            echo 'export django_key=$django_key' >> $BASH_ENV
-            echo 'export debug=$debug' >> $BASH_ENV
-            echo 'export allowed_hosts=$allowed_hosts' >> $BASH_ENV
+            echo 'django_key=$django_key' >> '.env'
+            echo 'debug=$debug' >> '.env'
+            echo 'allowed_hosts=$allowed_hosts' >> '.env'
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
             docker build -t oc-lettings .
             docker tag oc-lettings corbravo/oc-lettings:$CIRCLE_SHA1 
