@@ -70,7 +70,7 @@ jobs:
           command: |
             echo 'django_key=<< parameters.DJANGO_KEY >>' >> '.env'
             echo 'debug=<< parameters.DEBUG >>' >> '.env'
-            echo 'allowed_hosts=<< parameters.ALLOWED_HOSTS >> >> '.env'
+            echo 'allowed_hosts=<< parameters.ALLOWED_HOSTS >>' >> '.env'
             cat .env
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
             docker build -t oc-lettings .
