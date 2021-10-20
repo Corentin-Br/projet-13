@@ -59,17 +59,17 @@ jobs:
   deploy:
     machine:
       enabled: true
-      steps:
-        - checkout
-        - run:
-            name: Setup Heroku
-            command: bash .circleci/setup-heroku.sh # run a script to set up Heroku
-        - run:
-            command: |
-              git push heroku main
-              heroku run py manage.py migrate
-              sleep 5 # sleep for 5 seconds to wait for dynos
-              heroku restart
+    steps:
+      - checkout
+      - run:
+          name: Setup Heroku
+          command: bash .circleci/setup-heroku.sh # run a script to set up Heroku
+      - run:
+          command: |
+            git push heroku main
+            heroku run py manage.py migrate
+            sleep 5 # sleep for 5 seconds to wait for dynos
+            heroku restart
     
       
 
