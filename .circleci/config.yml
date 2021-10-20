@@ -14,11 +14,11 @@ jobs:
           key: v3-dependencies-{{ checksum "requirements.txt" }}
       - run: 
           command: |
-            echo export DJANGO_KEY=${django_key}
-            echo export ENV=${env}
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+            export DJANGO_KEY=${django_key}
+            export ENV=${env}
       - save_cache:
           key: v3-dependencies-{{ checksum "requirements.txt" }}
           paths:
