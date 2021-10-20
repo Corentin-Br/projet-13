@@ -14,9 +14,9 @@ jobs:
           key: v3-dependencies-{{ checksum "requirements.txt" }}
       - run: 
           command: |
-            echo django_key=${django_key}
-            echo debug=${debug}
-            echo allowed_hosts=${allowed_hosts}
+#            echo django_key=${django_key}
+#            echo debug=${debug}
+#            echo allowed_hosts=${allowed_hosts}
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
@@ -48,11 +48,11 @@ jobs:
       - run:
           name: create-image
           command: |
-            echo django_key=${django_key}
-            echo debug=${debug}
-            echo allowed_hosts=${allowed_hosts}
+#            echo django_key=${django_key}
+#            echo debug=${debug}
+#            echo allowed_hosts=${allowed_hosts}
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
-            docker build -t oc-lettings .
+            docker build --build-arg django_key=${django_key} env=${env} -t oc-lettings .
             docker tag oc-lettings corbravo/oc-lettings:$CIRCLE_SHA1
             docker tag oc-lettings corbravo/oc-lettings:latest
             docker image push corbravo/oc-lettings:$CIRCLE_SHA1

@@ -1,5 +1,9 @@
 FROM python:3
+ARG django_key
+ARG env
 ENV PYTHONUNBUFFERED=1
+ENV DJANGO_KEY=$django_key
+ENV ENV = $env
 
 WORKDIR /code
 COPY requirements.txt /code/
