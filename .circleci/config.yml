@@ -57,21 +57,19 @@ jobs:
             docker image push corbravo/oc-lettings:latest
 
   deploy:
-    docker:
-      - image: circleci/python:3.8
-        auth:
-            username: corbravo
-            password: $DOCKERHUB_PASSWORD
-    steps:
-      - checkout
-      - run:
-        # To be done
-          name: do-nothing
-          command: |
-            echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
-            heroku login -i
-            $HEROKU_LOGIN
-            $HEROKU_PWD
+    machine:
+      enabled: true
+      steps:
+        - checkout
+        - run:
+            name: Setup Heroku
+            command: bash .circleci/setup-heroku.sh # run a script to set up Heroku
+        - run:
+            command: |
+              git push heroku main
+              heroku run py manage.py migrate
+              sleep 5 # sleep for 5 seconds to wait for dynos
+              heroku restart
     
       
 
