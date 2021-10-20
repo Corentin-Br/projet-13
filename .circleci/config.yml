@@ -8,6 +8,9 @@ jobs:
         auth: 
           username: corbravo
           password: $DOCKERHUB_PASSWORD
+    environment:
+      DJANGO_KEY: ${django_key}
+      ENV: ${env}
     steps:
       - checkout
       - restore_cache:
@@ -17,8 +20,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-            export DJANGO_KEY=${django_key}
-            export ENV=${env}
+
       - save_cache:
           key: v3-dependencies-{{ checksum "requirements.txt" }}
           paths:
@@ -27,8 +29,6 @@ jobs:
           name: Run tests
           command: | 
            . venv/bin/activate
-           export DJANGO_KEY=${django_key}
-           export ENV=${env}
            python manage.py test
 
       - run: 
@@ -50,7 +50,7 @@ jobs:
           name: create-image
           command: |
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
-            docker build --build-arg django_key=${django_key} env=${env} -t oc-lettings .
+            docker build -t oc-lettings --build-arg django_key=${django_key} env=${env} .
             docker tag oc-lettings corbravo/oc-lettings:$CIRCLE_SHA1
             docker tag oc-lettings corbravo/oc-lettings:latest
             docker image push corbravo/oc-lettings:$CIRCLE_SHA1
