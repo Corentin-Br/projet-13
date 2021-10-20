@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   python: circleci/python@1.2
+  heroku: circleci/heroku@0.0.10
 jobs:
   build-and-test:
     docker:
@@ -56,21 +57,21 @@ jobs:
             docker image push corbravo/oc-lettings:$CIRCLE_SHA1
             docker image push corbravo/oc-lettings:latest
 
-  deploy:
-    machine:
-      enabled: true
-    steps:
-      - checkout
-      - run:
-          name: Setup Heroku
-          command: bash .circleci/setup-heroku.sh # run a script to set up Heroku
-      - run:
-          command: |
-            git push heroku main
-            heroku run py manage.py migrate
-            sleep 5 # sleep for 5 seconds to wait for dynos
-            heroku restart
-    
+#  deploy:
+#    machine:
+#      enabled: true
+#    steps:
+#      - checkout
+#      - run:
+#          name: Setup Heroku
+#          command: bash .circleci/setup-heroku.sh # run a script to set up Heroku
+#      - run:
+#          command: |
+#            git push heroku main
+#            heroku run py manage.py migrate
+#            sleep 5 # sleep for 5 seconds to wait for dynos
+#            heroku restart
+#
       
 
 
@@ -84,7 +85,7 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy:
+      - heroku/deploy-via-git:
           requires:
             - containerization
           filters:

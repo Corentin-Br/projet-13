@@ -17,7 +17,7 @@ SECRET_KEY = config['DJANGO_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if config.get('ENV', "development") == 'production' else True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = [".herokuapps.com", "127.0.0.1", "localhost"]
 
 
 # Application definition
