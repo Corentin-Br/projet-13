@@ -77,4 +77,4 @@ workflows:
               only: master
           post-steps:
             - run:
-                command: heroku run py manage.py migrate
+                command: heroku run -a oc-lettings-cbravo py manage.py migrate
