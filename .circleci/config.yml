@@ -75,3 +75,6 @@ workflows:
           filters:
             branches:
               only: master
+          post-steps:
+            - run:
+                command: heroku run py manage.py migrate
