@@ -67,7 +67,7 @@ jobs:
       - run:
         # To be done
           name: do-nothing
-          command:
+          command: |
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
             heroku login -i
             $HEROKU_LOGIN
