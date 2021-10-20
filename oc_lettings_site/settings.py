@@ -15,7 +15,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config['DJANGO_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False if config.get['ENV', "development"] == 'production' else True
+DEBUG = False if config.get('ENV', "development") == 'production' else True
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
@@ -114,5 +114,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-if config.get["ENV", "development"] == "production":
+if config.get("ENV", "development") == "production":
     django_heroku.settings(locals())
