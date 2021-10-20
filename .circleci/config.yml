@@ -50,7 +50,7 @@ jobs:
           name: create-image
           command: |
             echo $DOCKERHUB_PASSWORD | docker login --username corbravo --password-stdin
-            docker build -t oc-lettings --build-arg django_key=${django_key} env=${env} .
+            docker build -t oc-lettings --build-arg django_key=${django_key} --build-arg env=${env} .
             docker tag oc-lettings corbravo/oc-lettings:$CIRCLE_SHA1
             docker tag oc-lettings corbravo/oc-lettings:latest
             docker image push corbravo/oc-lettings:$CIRCLE_SHA1
