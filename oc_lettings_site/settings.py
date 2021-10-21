@@ -1,6 +1,16 @@
 import os
 
 import django_heroku
+import sentry_sdk
+
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://d9d06d3a84f941ed932eea3f2a7642d0@o1046580.ingest.sentry.io/6022654",
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+    send_default_pii=True,
+)
 
 config = os.environ
 
