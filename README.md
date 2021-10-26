@@ -84,12 +84,15 @@ Pour que le déploiement se passe correctement, il est nécessaire que l'applica
 
 N.B : Ces variables ne doivent être initialisées qu'une fois, à la création de l'application Heroku.
 
-#### Déployer
+##### Déployer
 - Si l'application existe déjà:
 Il suffit de lancer la pipeline CircleCI. Celle-ci peut être lancée manuellement sur l'application CircleCI, ou être automatiquement lancée par un *push* sur la branche 'master' du dépôt GitHub.
 
 - Si l'application n'existe pas ou plus:
-Après avoir lancé la pipeline CircleCI comme au-dessus, il faut initialiser le contenu de la base de données (sauf bien entendu si vous voulez remettre à zéro la base de données).
+Lancez la commande `heroku create <nom_de_l_application>`.
+Configurez les variables d'environnement comme indiqué au paragraphe précédent.
+Lancez la pipeline CircleCI comme au-dessus.
+Après avoir lancé la pipeline, il faut initialiser le contenu de la base de données (sauf bien entendu si vous voulez remettre à zéro la base de données).
 Pour cela, il vous faut ajouter un fichier JSON (e.g : `data.json`) qui contient les données dans le dépôt. Un moyen d'en obtenir un est d'utiliser la commande *dumpdata* sur la base de données.
 Une fois la pipeline exécutée et l'application en ligne, utilisez la commande `heroku run -a <nom_de_l_application> python manage.py loaddata <nom_du_fichier_JSON>`, par exemple `heroku run -a oc-lettings-cbravo python manage.py loaddata data.json`
 
